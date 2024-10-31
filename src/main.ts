@@ -4,6 +4,7 @@ import { createPinia } from 'pinia';
 import router from './router/index.ts';
 // import './style.css'
 import vuetify from './plugins/vuetify';
+import './plugins/axiosConfig';
 
 const app = createApp(App);
 
