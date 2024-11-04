@@ -5,36 +5,44 @@
         <img src="" alt="Logo" class="logo" />
       </router-link>
     </v-toolbar-title>
-    
+
     <v-spacer></v-spacer>
 
     <!-- Links do Menu (Desktop) -->
     <v-row class="d-none d-md-flex">
-      <v-btn v-for="item in filteredMenuItems" :key="item.path" :to="item.path" text color="var(--text-color)">
+      <v-btn
+        v-for="(item, index) in filteredMenuItems"
+        :key="index"
+        :to="item.path"
+        text
+        color="var(--text-color)"
+      >
         {{ item.name }}
       </v-btn>
     </v-row>
 
     <!-- Avatar e Logout (Desktop) -->
-    <template v-if="isUserLoggedIn && !isMobile">
-      <v-menu offset-y>
-        <template #activator="{ props }">
-          <v-btn icon v-bind="props">
-            <v-avatar size="36">
-              <img :src="userAvatar" alt="User Avatar" class="avatar-img" />
-            </v-avatar>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item @click="goToUserSettings">
-            <v-list-item-title>Perfil</v-list-item-title>
-          </v-list-item>
-          <v-list-item @click="logoutUser">
-            <v-list-item-title>Logout</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </template>
+    <v-menu v-if="isUserLoggedIn && !isMobile" offset-y>
+      <template #activator="{ props }">
+        <v-btn icon v-bind="props">
+          <v-avatar size="36">
+            <img :src="userAvatar" alt="User Avatar" class="avatar-img" />
+          </v-avatar>
+        </v-btn>
+      </template>
+      <v-list class="submenu-list">
+        <v-list-item @click="goToUserSettings" link title="Perfil">
+          <template #prepend>
+            <v-icon>mdi-account</v-icon>
+          </template>
+        </v-list-item>
+        <v-list-item @click="logoutUser" link title="Logout">
+          <template #prepend>
+            <v-icon color="var(--secondary-color)">mdi-logout</v-icon>
+          </template>
+        </v-list-item>
+      </v-list>
+    </v-menu>
 
     <!-- Botão do Menu (Mobile) -->
     <v-btn icon @click="toggleMenu" class="d-md-none">
@@ -42,35 +50,58 @@
     </v-btn>
 
     <!-- Menu Lateral (Mobile) -->
-    <v-navigation-drawer v-model="menuCollapsed" app temporary right>
+    <v-navigation-drawer
+      v-model="menuCollapsed"
+      <!-- app
+      temporary
+      right
+      class="d-md-none" -->
+    >
       <v-list>
-        <v-list-item v-for="item in filteredMenuItems" :key="item.path" @click="toggleMenu">
-          <v-list-item-title>
-            <router-link :to="item.path" class="drawer-link">{{ item.name }}</router-link>
-          </v-list-item-title>
+        <!-- Itens do Menu -->
+        <v-list-item
+          v-for="(item, index) in filteredMenuItems"
+          :key="index"
+          :to="item.path"
+          link
+          @click="toggleMenu"
+        >
+          <v-list-item-content>
+            <v-list-item-title>{{ item.name }}</v-list-item-title>
+          </v-list-item-content>
         </v-list-item>
 
         <!-- Avatar e Logout (Mobile) -->
-        <template v-if="isUserLoggedIn">
-          <v-divider></v-divider>
-          <v-list-item @click="goToUserSettings">
+        <v-divider v-if="isUserLoggedIn"></v-divider>
+        <v-list-item
+          v-if="isUserLoggedIn"
+          @click="goToUserSettings"
+          link
+          :title="username"
+        >
+          <template #prepend>
             <v-avatar size="36">
               <img :src="userAvatar" alt="User Avatar" class="avatar-img" />
             </v-avatar>
-            <v-list-item-subtitle>{{ username }}</v-list-item-subtitle>
-          </v-list-item>
-          <v-list-item @click="logoutUser">
-            <v-icon color="var(--secondary-color)" left>mdi-logout</v-icon>
-            <v-list-item-subtitle>Logout</v-list-item-subtitle>
-          </v-list-item>
-        </template>
+          </template>
+        </v-list-item>
+        <v-list-item
+          v-if="isUserLoggedIn"
+          @click="logoutUser"
+          link
+          title="Logout"
+        >
+          <template #prepend>
+            <v-icon color="var(--secondary-color)">mdi-logout</v-icon>
+          </template>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </v-app-bar>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/auth';
 
@@ -122,9 +153,13 @@ onMounted(() => {
   updateIsMobile();
   window.addEventListener('resize', updateIsMobile);
 });
-</script>
 
+onUnmounted(() => {
+  window.removeEventListener('resize', updateIsMobile);
+});
+</script>
 <style scoped>
+/* Estilos gerais */
 .logo {
   height: 50px;
   width: 50px;
@@ -132,9 +167,9 @@ onMounted(() => {
   object-fit: cover;
 }
 
-.drawer-link {
-  color: var(--text-color);
-  text-decoration: none;
+.brand-logo {
+  display: flex;
+  align-items: center;
 }
 
 .avatar-img {
@@ -144,24 +179,60 @@ onMounted(() => {
   display: block;
 }
 
+/* Estilos para o App Bar */
+.v-app-bar {
+  background-color: var(--primary-color);
+}
+
+.v-toolbar-title .brand-logo img {
+  height: 40px;
+}
+
+/* Estilos para os botões do menu (Desktop) */
+.v-btn {
+  color: var(--text-color);
+}
+
+.v-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para o Menu Lateral (Mobile) */
 .v-navigation-drawer {
   background-color: var(--primary-color);
 }
 
-.v-list-item-title {
-  color: var(--text-color);
-}
-
-.v-icon {
-  color: var(--text-color);
-}
-
-/* Ajustes para o menu lateral */
 .v-navigation-drawer .v-list-item {
-  color: var(--text-color);
+  color: black;
+}
+
+.v-navigation-drawer .v-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .v-navigation-drawer .v-icon {
-  color: var(--text-color);
+  color: black;
+}
+
+/* Estilos para o Submenu do Avatar */
+.submenu-list {
+  background-color: var(--primary-color);
+}
+
+.submenu-list .v-list-item {
+  color: black);
+}
+
+.submenu-list .v-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.submenu-list .v-icon {
+  color: black;
+}
+
+/* Estilos para o botão do menu (Mobile) */
+.d-md-none .v-btn {
+  color: var(--accent-color);
 }
 </style>
