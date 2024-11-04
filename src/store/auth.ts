@@ -5,7 +5,15 @@ import { ref } from 'vue';
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string | null>(null);
   const isAuthenticated = ref<boolean>(false);
-  const instanceIP = ref<string | null>(null);
+  const username = ref<string | null>(null);
+  const avatar = ref<string | null>(null);
+
+  interface RegisterPayload {
+    username: string;
+    email: string;
+    password: string;
+    avatar: string;
+  }
   
   async function login(email: string, password: string) {
     try {
@@ -13,6 +21,12 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = response.data.token;
       isAuthenticated.value = true;
       
+      // Armazenar token, username e avatar no estado
+      token.value = response.data.token;
+      username.value = response.data.username;
+      avatar.value = response.data.avatar;
+      isAuthenticated.value = true;
+
       // Salvar o token no localStorage ou sessionStorage
       localStorage.setItem('authToken', token.value);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token.value}`;
@@ -31,9 +45,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  async function register(username: string, email: string, password: string) {
+  async function register( user: RegisterPayload) {
     try {
-      await axios.post('/api/auth/register', { username, email, password });
+      await axios.post('/api/auth/register', user);
       alert('Registration successful! You can now login.');
     } catch (error) {
       console.error('Registration failed:', error);
@@ -50,8 +64,9 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     token,
     isAuthenticated,
+    username,
+    avatar,
     login,
-    register,
     logout,
   };
 });

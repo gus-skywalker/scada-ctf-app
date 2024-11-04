@@ -17,7 +17,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { useAuthStore } from '@/store/modules/auth';
+import { useAuthStore } from '@/store/auth';
 
 const email = ref<string>('');
 const password = ref<string>('');

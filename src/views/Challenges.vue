@@ -8,7 +8,7 @@
   
 <script lang="ts" setup>
   import ChallengeList from '@/components/ChallengeList.vue';
-  import { useAuthStore } from '@/store/modules/auth';
+  import { useAuthStore } from '@/store/auth';
 
   const authStore = useAuthStore();
 
