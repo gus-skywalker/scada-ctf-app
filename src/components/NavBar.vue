@@ -38,15 +38,15 @@
           </template>
           <v-list>
             <v-list-item @click="goToUserSettings" link>
-              <v-list-item-icon>
+              <template #prepend>
                 <v-icon>mdi-account</v-icon>
-              </v-list-item-icon>
+              </template>
               <v-list-item-title>Perfil</v-list-item-title>
             </v-list-item>
             <v-list-item @click="logoutUser" link>
-              <v-list-item-icon>
+              <template #prepend>
                 <v-icon color="var(--secondary-color)">mdi-logout</v-icon>
-              </v-list-item-icon>
+              </template>
               <v-list-item-title>Logout</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -80,11 +80,11 @@
         @click="goToUserSettings"
         link
       >
-        <v-list-item-avatar>
+        <template #prepend>
           <v-avatar size="36">
             <img :src="userAvatar" alt="User Avatar" class="avatar-img" />
           </v-avatar>
-        </v-list-item-avatar>
+        </template>
         <v-list-item-title>{{ username }}</v-list-item-title>
       </v-list-item>
       <v-list-item
@@ -92,14 +92,15 @@
         @click="logoutUser"
         link
       >
-        <v-list-item-icon>
+        <template #prepend>
           <v-icon color="var(--secondary-color)">mdi-logout</v-icon>
-        </v-list-item-icon>
+        </template>
         <v-list-item-title>Logout</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
+
 <script setup>
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
@@ -148,6 +149,7 @@ function goToUserSettings() {
 // Utiliza o composable useDisplay do Vuetify para detectar o dispositivo
 const { mobile } = useDisplay();
 </script>
+
 <style scoped>
 .logo {
   height: 50px;
