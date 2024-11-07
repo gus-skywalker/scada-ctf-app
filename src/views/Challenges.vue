@@ -3,10 +3,10 @@
     <h1 class="title">Challenges</h1>
 
     <!-- Campo de visualização VNC (iframe) -->
-    <div v-if="isInstanceReady" class="viewer">
+    <div v-if="instanceStore.isInstanceReady" class="viewer">
       <h2 class="viewer-title">Instance Viewer</h2>
       <iframe
-        :src="`http://${authStore.instanceIP}/vnc.html`"
+        :src="`http://${instanceStore.instanceIP}/vnc_lite.html?password=password`"
         width="100%"
         height="600"
         frameborder="0"
@@ -23,27 +23,27 @@
     <!-- Botões de controle da instância fixados na lateral direita -->
     <div class="button-column">
       <!-- Botão para iniciar a instância -->
-      <div v-if="instanceStatus === 'STOPPED' || instanceStatus === 'FAILED' || instanceStatus === null">
-        <button class="btn start-btn" @click="startInstance">Start Instance</button>
+      <div v-if="instanceStore.instanceStatus === 'STOPPED' || instanceStore.instanceStatus === 'FAILED' || instanceStore.instanceStatus === null">
+        <button class="btn start-btn" @click="instanceStore.startInstance">Start Instance</button>
       </div>
 
       <!-- Botões adicionais de controle da instância -->
-      <div v-if="instanceStatus === 'PENDING' || instanceStatus === 'READY'">
-        <button :disabled="!isInstanceReady" @click="goToInstance" class="btn access-btn">
+      <div v-if="instanceStore.instanceStatus === 'PENDING' || instanceStore.instanceStatus === 'READY'">
+        <button :disabled="!instanceStore.isInstanceReady" @click="instanceStore.goToInstance" class="btn access-btn">
           Go to My Instance
         </button>
-        <button @click="updateInstanceStatus" class="btn update-btn">Update Status</button>
-        <button @click="stopInstance" class="btn stop-btn">Stop Instance</button>
+        <button @click="instanceStore.updateInstanceStatus" class="btn update-btn">Update Status</button>
+        <button @click="instanceStore.stopInstance" class="btn stop-btn">Stop Instance</button>
       </div>
 
       <!-- Mensagens de feedback sobre o status da instância -->
-      <div class="status-message" v-if="instanceStatus === 'PENDING'">
+      <div class="status-message" v-if="instanceStore.instanceStatus === 'PENDING'">
         Instance is starting...
       </div>
-      <div class="status-message" v-if="instanceStatus === 'READY' && !isInstanceReady">
+      <div class="status-message" v-if="instanceStore.instanceStatus === 'READY' && !instanceStore.isInstanceReady">
         Instance is ready. You can now view it below.
       </div>
-      <div class="status-message error" v-if="instanceStatus === 'FAILED'">
+      <div class="status-message error" v-if="instanceStore.instanceStatus === 'FAILED'">
         Instance failed to start. Please try again.
       </div>
     </div>
@@ -52,79 +52,23 @@
 
 <script lang="ts" setup>
 import ChallengeList from '@/components/ChallengeList.vue';
-import { useAuthStore } from '@/store/auth';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { useInstanceStore } from '@/store/awsInstance';
+import { onMounted, onUnmounted } from 'vue';
 
-const authStore = useAuthStore();
-const instanceStatus = ref('READY');  // Status configurado temporariamente como 'READY' para testes
-const isInstanceReady = ref(true); // Configurado temporariamente como true para permitir acesso à instância
-let intervalId: NodeJS.Timeout;
-
-async function startInstance() {
-  try {
-    const response = await fetch('/api/instance/start', { method: 'POST' });
-    const data = await response.json();
-    instanceStatus.value = data.status;
-    alert(data.message);
-    
-    intervalId = setInterval(fetchInstanceStatus, 15000);
-  } catch (error) {
-    console.error("Error starting instance:", error);
-  }
-}
-
-async function fetchInstanceStatus() {
-  try {
-    const response = await fetch('/api/instance/status');
-    const data = await response.json();
-    
-    instanceStatus.value = data.status;
-    authStore.instanceIP = data.instanceIP;
-    
-    if (data.status === 'READY') {
-      isInstanceReady.value = true;
-      clearInterval(intervalId);
-    } else if (data.status === 'FAILED') {
-      clearInterval(intervalId);
-    }
-  } catch (error) {
-    console.error("Error fetching instance status:", error);
-  }
-}
-
-async function stopInstance() {
-  try {
-    const response = await fetch('/api/instance/stop', { method: 'POST' });
-    if (response.ok) {
-      alert("Instance stopped successfully.");
-      instanceStatus.value = 'STOPPED';
-      isInstanceReady.value = false;
-    } else {
-      alert("Failed to stop instance.");
-    }
-  } catch (error) {
-    console.error("Error stopping instance:", error);
-  }
-}
-
-async function updateInstanceStatus() {
-  await fetchInstanceStatus();
-}
-
-function goToInstance() {
-  if (authStore.instanceIP) {
-    window.location.href = `http://${authStore.instanceIP}`;
-  } else {
-    alert('Instance not ready. Please try again later.');
-  }
-}
+const instanceStore = useInstanceStore();
 
 onMounted(() => {
-  fetchInstanceStatus();
+  instanceStore.fetchInstanceStatus();
 });
 
 onUnmounted(() => {
-  clearInterval(intervalId);
+  try {
+    if (instanceStore.intervalId && instanceStore.intervalId.value !== null) {
+      clearInterval(instanceStore.intervalId.value);
+    }
+  } catch (error) {
+    console.error("Error clearing interval:", error);
+  }
 });
 </script>
 

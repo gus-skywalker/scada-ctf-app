@@ -46,7 +46,7 @@ const password = ref('');
 async function handleLogin() {
   try {
     await authStore.login(email.value, password.value);
-    router.push('/'); // Redireciona após o login bem-sucedido
+    router.push('/');
   } catch (error) {
     console.error('Erro ao fazer login:', error);
     alert('Falha ao fazer login. Por favor, verifique suas credenciais.');

@@ -9,6 +9,7 @@
           <v-text-field
             v-model="username"
             label="Nome de Usuário"
+            :rules="[usernameRule]"
             required
           ></v-text-field>
 
@@ -23,6 +24,7 @@
             v-model="password"
             label="Senha"
             type="password"
+            :rules="[passwordRule]"
             required
           ></v-text-field>
 
@@ -30,6 +32,7 @@
             v-model="confirmPassword"
             label="Confirmar Senha"
             type="password"
+            :rules="[confirmPasswordRule]"
             required
           ></v-text-field>
 
@@ -83,6 +86,13 @@ const password = ref('');
 const confirmPassword = ref('');
 const showAvatarModal = ref(false);
 const selectedAvatar = ref(null);
+
+const usernameRule = (value) => !!value || 'Nome de usuário é obrigatório';
+const passwordRule = (value) => {
+  if (value && value.length < 6) return 'A senha deve ter pelo menos 6 caracteres';
+  return true;
+};
+const confirmPasswordRule = (value) => value === newPassword.value || 'As senhas não coincidem';
 
 async function handleRegister() {
   if (password.value !== confirmPassword.value) {
