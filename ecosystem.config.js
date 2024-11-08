@@ -3,7 +3,7 @@ module.exports = {
       {
         name: "scada-ctf-app",
         script: "serve",
-        args: "-s dist -l 4000",
+        args: "-s dist --listen 4000",
         env: {
           NODE_ENV: "production",
         },
