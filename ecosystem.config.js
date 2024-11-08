@@ -1,13 +1,14 @@
 module.exports = {
     apps: [
       {
-        name: "scada-ctf-app",
-        script: "serve",
-        args: "-s dist --listen 4000",
+        name: "scada-ctf-app-spa",
+        script: "server.cjs",
         env: {
           NODE_ENV: "production",
+          PORT: 4000
         },
       },
     ],
   };
+  
   
