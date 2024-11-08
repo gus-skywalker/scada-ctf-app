@@ -2,17 +2,32 @@
   <div class="container">
     <h1 class="title">Challenges</h1>
 
+    <!-- Condição para visualização de espera -->
+    <div v-if="instanceStore.instanceStatus === 'PENDING'" class="loading-indicator">
+      <p>Starting instance... Please wait.</p>
+      <div class="spinner"></div>
+    </div>
+
     <!-- Campo de visualização VNC (iframe) -->
-    <div v-if="instanceStore.isInstanceReady" class="viewer">
+    <div class="viewer" v-if="instanceStore.instanceStatus === 'READY'">
       <h2 class="viewer-title">Instance Viewer</h2>
       <iframe
-        :src="`http://${instanceStore.instanceIP}/vnc_lite.html?password=password`"
+        :src="instanceURL"
         width="100%"
         height="600"
         frameborder="0"
         allowfullscreen
         class="viewer-frame"
       ></iframe>
+    </div>
+    <div class="instance-ip">
+        <p><strong>Instance IP:</strong> {{ instanceStore.instanceIP }}</p>
+    </div>
+
+    <!-- Mensagem de erro ao falhar -->
+    <div v-if="instanceStore.instanceStatus === 'FAILED'" class="status-message error">
+      <p>Instance failed to start. Please try again.</p>
+      <button class="retry-btn" @click="retryStartInstance">Retry</button>
     </div>
 
     <!-- Lista de Desafios -->
@@ -35,17 +50,6 @@
         <button @click="instanceStore.updateInstanceStatus" class="btn update-btn">Update Status</button>
         <button @click="instanceStore.stopInstance" class="btn stop-btn">Stop Instance</button>
       </div>
-
-      <!-- Mensagens de feedback sobre o status da instância -->
-      <div class="status-message" v-if="instanceStore.instanceStatus === 'PENDING'">
-        Instance is starting...
-      </div>
-      <div class="status-message" v-if="instanceStore.instanceStatus === 'READY' && !instanceStore.isInstanceReady">
-        Instance is ready. You can now view it below.
-      </div>
-      <div class="status-message error" v-if="instanceStore.instanceStatus === 'FAILED'">
-        Instance failed to start. Please try again.
-      </div>
     </div>
   </div>
 </template>
@@ -53,18 +57,23 @@
 <script lang="ts" setup>
 import ChallengeList from '@/components/ChallengeList.vue';
 import { useInstanceStore } from '@/store/awsInstance';
-import { onMounted, onUnmounted } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 
 const instanceStore = useInstanceStore();
+const instanceURL = computed(() => instanceStore.instanceIP ? `http://${instanceStore.instanceIP}/vnc_lite.html?password=password` : '');
 
 onMounted(() => {
   instanceStore.fetchInstanceStatus();
 });
 
+function retryStartInstance() {
+  instanceStore.startInstance();
+}
+
 onUnmounted(() => {
   try {
-    if (instanceStore.intervalId && instanceStore.intervalId.value !== null) {
-      clearInterval(instanceStore.intervalId.value);
+    if (instanceStore.intervalId && instanceStore.intervalId !== null) {
+      clearInterval(instanceStore.intervalId);
     }
   } catch (error) {
     console.error("Error clearing interval:", error);
@@ -164,5 +173,47 @@ onUnmounted(() => {
 
 .status-message.error {
   color: #f44336;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #2196f3;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.instance-ip {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Botão de retry para o erro */
+.retry-btn {
+  background-color: #ff9800;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
 }
 </style>

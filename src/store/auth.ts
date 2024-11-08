@@ -24,9 +24,9 @@ export const useAuthStore = defineStore('auth', () => {
       avatar.value = response.data.avatar;
 
       // Salve os dados no localStorage
-      localStorage.setItem('authToken', token.value);
-      localStorage.setItem('username', username.value);
-      localStorage.setItem('avatar', avatar.value);
+      localStorage.setItem('authToken', token.value ?? '');
+      localStorage.setItem('username', username.value ?? '');
+      localStorage.setItem('avatar', avatar.value ?? '');
 
       // Configuração do cabeçalho Authorization
       axios.defaults.headers.common['Authorization'] = `Bearer ${token.value}`;
@@ -41,15 +41,6 @@ export const useAuthStore = defineStore('auth', () => {
       }
     }
     
-  }
-
-  async function fetchSessionInstance() {
-    try {
-      const response = await axios.get('/api/instances/session');
-      instanceIp.value = response.data.instanceIP;
-    } catch (error) {
-      console.error('Error fetching instance session:', error);
-    }
   }
 
   async function register(user: RegisterPayload) {

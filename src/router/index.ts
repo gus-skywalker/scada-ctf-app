@@ -24,7 +24,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const authStore = useAuthStore();
   
   // Se a rota requer autenticação e o usuário não está autenticado

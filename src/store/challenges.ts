@@ -15,7 +15,7 @@ export const useChallengesStore = defineStore('challenges', {
       }
     },
     
-    async submitFlag(challengeId, flag) {
+    async submitFlag(challengeId: string, flag: string) {
       try {
         const response = await axios.post('/api/challenges/submit', { challengeId, flag });
         // Lógica para lidar com a resposta
