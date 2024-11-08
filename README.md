@@ -45,3 +45,7 @@ npm install -g serve
 ou
 
 pm2 start ecosystem.config.js
+
+# Configuration Files
+ecosystem.config.js
+server.js
