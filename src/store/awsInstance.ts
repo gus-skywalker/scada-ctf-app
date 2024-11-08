@@ -4,8 +4,8 @@ import { ref, watch } from 'vue';
 import axios from 'axios';
 
 export const useInstanceStore = defineStore('instance', () => {
-    const instanceStatus = ref<string | null>(null);
-    //   const instanceStatus = 'READY';
+    // const instanceStatus = ref<string | null>(null);
+      const instanceStatus = 'READY';
     const instanceIP = ref<string | null>(null);
   const isInstanceReady = ref(false);
 

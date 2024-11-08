@@ -92,7 +92,7 @@ const passwordRule = (value) => {
   if (value && value.length < 6) return 'A senha deve ter pelo menos 6 caracteres';
   return true;
 };
-const confirmPasswordRule = (value) => value === newPassword.value || 'As senhas não coincidem';
+const confirmPasswordRule = (value) => value === password.value || 'As senhas não coincidem';
 
 async function handleRegister() {
   if (password.value !== confirmPassword.value) {
