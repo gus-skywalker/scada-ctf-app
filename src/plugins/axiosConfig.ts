@@ -1,4 +1,4 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://ctf.lesmonades.com';
+axios.defaults.baseURL = 'http://localhost:4001';
 export default axios;
