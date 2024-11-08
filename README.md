@@ -38,3 +38,10 @@ src/
 ├── App.vue                  # Componente raiz
 ├── main.js                  # Arquivo principal de entrada
 └── vuetify.js               # Configuração do Vuetify (se estiver usando)
+
+# Production
+npm install -g serve
+
+ou
+
+pm2 start ecosystem.config.js
