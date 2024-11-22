@@ -8,7 +8,7 @@
 
     <v-toolbar-title>
       <router-link to="/" class="brand-logo">
-        <img src="" alt="Logo" class="logo" />
+        <img src="@/assets/lsc-logo.jpeg" alt="Logo" class="logo" style="width: 80px; height: auto;"/>
       </router-link>
     </v-toolbar-title>
 
