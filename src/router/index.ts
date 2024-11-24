@@ -5,11 +5,13 @@ import Register from '../views/Register.vue';
 import Challenges from '../views/Challenges.vue';
 import { useAuthStore } from '@/store/auth';
 import axios from 'axios';
+import Ranking from '@/views/Ranking.vue';
 
 const routes = [
   { path: '/', component: Home },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
+  { path: '/ranking', component: Ranking },
   { path: '/challenges', component: Challenges, meta: { requiresAuth: true } },
   {
     path: '/user-settings',

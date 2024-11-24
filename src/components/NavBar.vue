@@ -118,6 +118,7 @@ const menuItems = [
   { name: 'Challenges', path: '/challenges' },
   { name: 'Register', path: '/register' },
   { name: 'Login', path: '/login' },
+  { name: 'Ranking', path: '/ranking'}
 ];
 
 const authStore = useAuthStore();

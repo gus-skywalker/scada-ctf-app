@@ -3,10 +3,10 @@ import axios from 'axios';
 import { ref } from 'vue';
 
 export const useAuthStore = defineStore('auth', () => {
-  const token = ref<string | null>(localStorage.getItem('authToken'));
-  const isAuthenticated = ref<boolean>(!!token.value); // Autenticação baseada no token salvo
-  const username = ref<string | null>(localStorage.getItem('username'));
-  const avatar = ref<string | null>(localStorage.getItem('avatar'));
+  const token = ref<string | null>(sessionStorage.getItem('authToken'));
+  const isAuthenticated = ref<boolean>(!!token.value);
+  const username = ref<string | null>(sessionStorage.getItem('username'));
+  const avatar = ref<string | null>(sessionStorage.getItem('avatar'));
 
   interface RegisterPayload {
     username: string;
@@ -23,10 +23,10 @@ export const useAuthStore = defineStore('auth', () => {
       username.value = response.data.username;
       avatar.value = response.data.avatar;
 
-      // Salve os dados no localStorage
-      localStorage.setItem('authToken', token.value ?? '');
-      localStorage.setItem('username', username.value ?? '');
-      localStorage.setItem('avatar', avatar.value ?? '');
+      // Salve os dados no localSession
+      sessionStorage.setItem('authToken', token.value ?? '');
+      sessionStorage.setItem('username', username.value ?? '');
+      sessionStorage.setItem('avatar', avatar.value ?? '');
 
       // Configuração do cabeçalho Authorization
       axios.defaults.headers.common['Authorization'] = `Bearer ${token.value}`;
@@ -54,12 +54,12 @@ export const useAuthStore = defineStore('auth', () => {
 
   function setUsername(newUsername: string) {
     username.value = newUsername;
-    localStorage.setItem('username', newUsername);
+    sessionStorage.setItem('username', newUsername);
   }
 
   function setAvatar(newAvatarUrl: string) {
     avatar.value = newAvatarUrl;
-    localStorage.setItem('avatar', newAvatarUrl);
+    sessionStorage.setItem('avatar', newAvatarUrl);
   }
 
   function logout() {
@@ -68,10 +68,10 @@ export const useAuthStore = defineStore('auth', () => {
     username.value = null;
     avatar.value = null;
 
-    // Remover dados do localStorage
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('username');
-    localStorage.removeItem('avatar');
+    // Remover dados do sessionStorage
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('avatar');
     
     // Remover o cabeçalho Authorization
     delete axios.defaults.headers.common['Authorization'];
