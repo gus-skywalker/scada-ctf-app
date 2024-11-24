@@ -1,0 +1,17 @@
+{
+    "welcome": "Welcome to the Capture The Flag Game",
+    "exploreChallenges": "Explore the challenges and see if you can claim victory!",
+    "instructions": "Instruction Campaign",
+    "objective": "Identify the target and exposed services",
+    "scanningScript": "Scanning Script",
+    "writeCommands": "Write Commands",
+    "abnormalTraffic": "Discovery Abnormal Traffic",
+    "pythonScripts": "Python Attack Scripts",
+    "criticalAlerts": "Where do the critical refinery alerts go in case of operational issues (port/protocol)?",
+    "vulnerabilityWindow": "What is the time window vulnerable to an attack?",
+    "refineryCodeAccess": "Where is the access code to the refinery scheme?",
+    "requiredData": "What is needed to obtain the file with the refinery scheme code?",
+    "behavior": "a. If yes, what behavior was observed?",
+    "unexpectedMessage": "b. If you send an unexpected message, what happens?"
+  }
+  

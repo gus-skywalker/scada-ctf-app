@@ -8,11 +8,34 @@
 
     <v-toolbar-title>
       <router-link to="/" class="brand-logo">
-        <img src="@/assets/lsc-logo.jpeg" alt="Logo" class="logo" style="width: 80px; height: auto;"/>
+        <img src="@/assets/lsc-logo.jpeg" alt="Logo" class="logo" style="width: 80px; height: auto;" />
       </router-link>
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
+
+    <!-- Seletor de Idioma -->
+    <v-menu offset-y>
+      <template #activator="{ props }">
+        <v-btn icon v-bind="props">
+          <v-icon>mdi-earth</v-icon>
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item @click="setLanguage('pt')">
+          <v-avatar size="36">
+            <img src="" alt="Português" />
+          </v-avatar>
+          <v-list-item-title>Português</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="setLanguage('en')">
+          <v-avatar size="36">
+            <img src="" alt="English" />
+          </v-avatar>
+          <v-list-item-title>English</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
 
     <!-- Links do Menu (Desktop) -->
     <v-row class="d-none d-md-flex">
@@ -54,7 +77,6 @@
       </template>
     </v-row>
   </v-app-bar>
-
   <!-- Menu Lateral (Mobile) -->
   <v-navigation-drawer
     v-model="menuCollapsed"
@@ -101,8 +123,10 @@
   </v-navigation-drawer>
 </template>
 
+
 <script setup>
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/auth';
 import { useDisplay } from 'vuetify';
@@ -111,6 +135,11 @@ const menuCollapsed = ref(false);
 
 function toggleMenu() {
   menuCollapsed.value = !menuCollapsed.value;
+}
+
+const { locale } = useI18n();
+function setLanguage(language) {
+  locale.value = language;
 }
 
 const menuItems = [

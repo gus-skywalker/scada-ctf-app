@@ -1,0 +1,17 @@
+{
+    "welcome": "Bem-vindo ao Jogo Capture The Flag",
+    "exploreChallenges": "Explore os desafios e veja se você consegue reivindicar a vitória!",
+    "instructions": "Campanha de Instruções",
+    "objective": "Identificar o alvo e serviços expostos",
+    "scanningScript": "Script de Varredura",
+    "writeCommands": "Comandos de Escrita",
+    "abnormalTraffic": "Descoberta de Tráfego Anômalo",
+    "pythonScripts": "Scripts de Ataque em Python",
+    "criticalAlerts": "Para onde vão os alertas críticos da refinaria em casos de problemas na operação (porta/protocolo)?",
+    "vulnerabilityWindow": "Qual a janela de tempo que está passível a um ataque?",
+    "refineryCodeAccess": "Onde está o código de acesso do esquema da refinaria?",
+    "requiredData": "O que é necessário para obter o arquivo com o código do esquema da refinaria?",
+    "behavior": "a. Se sim, qual foi o comportamento obtido?",
+    "unexpectedMessage": "b. Se enviar uma mensagem inesperada, o que acontece?"
+  }
+  

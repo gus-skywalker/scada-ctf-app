@@ -83,7 +83,12 @@
   
   // Atualizar ranking a cada 30 segundos
   function startRankingUpdate() {
-    intervalId = setInterval(fetchRanking, 30000); // 30 segundos
+    newFunction(); // 30 segundos
+
+
+      function newFunction() {
+          intervalId = setInterval(fetchRanking, 30000);
+      }
   }
   
   // Parar a atualização ao sair da página
