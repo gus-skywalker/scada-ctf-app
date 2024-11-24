@@ -1,36 +1,37 @@
 <template>
   <v-container class="mt-10" max-width="400px">
     <v-card>
-      <v-card-title>Entrar</v-card-title>
-      <v-card-subtitle>Acesse sua conta</v-card-subtitle>
+      <v-card-title>{{ $t('login.title') }}</v-card-title>
+      <v-card-subtitle>{{ $t('login.subtitle') }}</v-card-subtitle>
 
       <v-card-text>
         <v-form @submit.prevent="handleLogin">
           <v-text-field
             v-model="email"
-            label="E-mail"
+            :label="$t('login.emailLabel')"
             type="email"
             required
           ></v-text-field>
 
           <v-text-field
             v-model="password"
-            label="Senha"
+            :label="$t('login.passwordLabel')"
             type="password"
             required
           ></v-text-field>
 
-          <v-btn type="submit" color="primary" block>Entrar</v-btn>
+          <v-btn type="submit" color="primary" block>{{ $t('login.loginButton') }}</v-btn>
         </v-form>
       </v-card-text>
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn text @click="goToRegister">Não tem uma conta? Registre-se</v-btn>
+        <v-btn text @click="goToRegister">{{ $t('login.registerLink') }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';

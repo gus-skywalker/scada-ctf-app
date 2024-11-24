@@ -8,7 +8,7 @@
 
     <v-toolbar-title>
       <router-link to="/" class="brand-logo">
-        <img src="@/assets/lsc-logo.jpeg" alt="Logo" class="logo" style="width: 80px; height: auto;" />
+        <img src="@/assets/lsc-logo.jpeg" :alt="$t('navbar.logoAlt')" class="logo" style="width: 80px; height: auto;" />
       </router-link>
     </v-toolbar-title>
 
@@ -26,13 +26,13 @@
           <v-avatar size="36">
             <img src="" alt="Português" />
           </v-avatar>
-          <v-list-item-title>Português</v-list-item-title>
+          <v-list-item-title>{{ $t('navbar.portuguese') }}</v-list-item-title>
         </v-list-item>
         <v-list-item @click="setLanguage('en')">
           <v-avatar size="36">
             <img src="" alt="English" />
           </v-avatar>
-          <v-list-item-title>English</v-list-item-title>
+          <v-list-item-title>{{ $t('navbar.english') }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -46,7 +46,7 @@
         text
         color="var(--text-color)"
       >
-        {{ item.name }}
+        {{ $t(`navbar.${item.name}`) }}
       </v-btn>
 
       <!-- Avatar e Logout (Desktop) -->
@@ -55,7 +55,7 @@
           <template #activator="{ props }">
             <v-btn icon v-bind="props">
               <v-avatar size="36">
-                <img :src="userAvatar" alt="User Avatar" class="avatar-img" />
+                <img :src="userAvatar" :alt="$t('navbar.userAvatar')" class="avatar-img" />
               </v-avatar>
             </v-btn>
           </template>
@@ -64,13 +64,13 @@
               <template #prepend>
                 <v-icon>mdi-account</v-icon>
               </template>
-              <v-list-item-title>Perfil</v-list-item-title>
+              <v-list-item-title>{{ $t('navbar.profile') }}</v-list-item-title>
             </v-list-item>
             <v-list-item @click="logoutUser" link>
               <template #prepend>
                 <v-icon color="var(--secondary-color)">mdi-logout</v-icon>
               </template>
-              <v-list-item-title>Logout</v-list-item-title>
+              <v-list-item-title>{{ $t('navbar.logout') }}</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -92,7 +92,7 @@
         link
         @click="toggleMenu"
       >
-        <v-list-item-title>{{ item.name }}</v-list-item-title>
+        <v-list-item-title>{{ $t(`navbar.${item.name}`) }}</v-list-item-title>
       </v-list-item>
 
       <!-- Avatar e Logout (Mobile) -->
@@ -104,7 +104,7 @@
       >
         <template #prepend>
           <v-avatar size="36">
-            <img :src="userAvatar" alt="User Avatar" class="avatar-img" />
+            <img :src="userAvatar" :alt="$t('navbar.userAvatar')" class="avatar-img" />
           </v-avatar>
         </template>
         <v-list-item-title>{{ username }}</v-list-item-title>
@@ -117,12 +117,11 @@
         <template #prepend>
           <v-icon color="var(--secondary-color)">mdi-logout</v-icon>
         </template>
-        <v-list-item-title>Logout</v-list-item-title>
+        <v-list-item-title>{{ $t('navbar.logout') }}</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
-
 
 <script setup>
 import { ref, computed } from 'vue';

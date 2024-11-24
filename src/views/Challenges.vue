@@ -1,16 +1,16 @@
 <template>
   <div class="container">
-    <h1 class="title">Challenges</h1>
+    <h1 class="title">{{ $t('challenges.title') }}</h1>
 
     <!-- Condição para visualização de espera -->
     <div v-if="instanceStore.instanceStatus === 'PENDING'" class="loading-indicator">
-      <p>Starting instance... Please wait.</p>
+      <p>{{ $t('challenges.starting') }}</p>
       <div class="spinner"></div>
     </div>
 
     <!-- Campo de visualização VNC (iframe) -->
     <div class="viewer" v-if="instanceStore.instanceStatus === 'READY'">
-      <h2 class="viewer-title">Instance Viewer</h2>
+      <h2 class="viewer-title">{{ $t('challenges.viewerTitle') }}</h2>
       <iframe
         :src="instanceURL"
         width="100%"
@@ -21,13 +21,13 @@
       ></iframe>
     </div>
     <div class="instance-ip">
-        <p><strong>Instance IP:</strong> {{ instanceStore.instanceIP }}</p>
+      <p><strong>{{ $t('challenges.instanceIP') }}</strong> {{ instanceStore.instanceIP }}</p>
     </div>
 
     <!-- Mensagem de erro ao falhar -->
     <div v-if="instanceStore.instanceStatus === 'FAILED'" class="status-message error">
-      <p>Instance failed to start. Please try again.</p>
-      <button class="retry-btn" @click="retryStartInstance">Retry</button>
+      <p>{{ $t('challenges.failedMessage') }}</p>
+      <button class="retry-btn" @click="retryStartInstance">{{ $t('challenges.retry') }}</button>
     </div>
 
     <!-- Lista de Desafios -->
@@ -39,16 +39,20 @@
     <div class="button-column">
       <!-- Botão para iniciar a instância -->
       <div v-if="instanceStore.instanceStatus === 'STOPPED' || instanceStore.instanceStatus === 'FAILED' || instanceStore.instanceStatus === null">
-        <button class="btn start-btn" @click="instanceStore.startInstance">Start Instance</button>
+        <button class="btn start-btn" @click="instanceStore.startInstance">{{ $t('challenges.startInstance') }}</button>
       </div>
 
       <!-- Botões adicionais de controle da instância -->
       <div v-if="instanceStore.instanceStatus === 'PENDING' || instanceStore.instanceStatus === 'READY'">
         <button :disabled="!instanceStore.isInstanceReady" @click="instanceStore.goToInstance" class="btn access-btn">
-          Go to My Instance
+          {{ $t('challenges.goToInstance') }}
         </button>
-        <button @click="instanceStore.updateInstanceStatus" class="btn update-btn">Update Status</button>
-        <button @click="instanceStore.stopInstance" class="btn stop-btn">Stop Instance</button>
+        <button @click="instanceStore.updateInstanceStatus" class="btn update-btn">
+          {{ $t('challenges.updateStatus') }}
+        </button>
+        <button @click="instanceStore.stopInstance" class="btn stop-btn">
+          {{ $t('challenges.stopInstance') }}
+        </button>
       </div>
     </div>
   </div>

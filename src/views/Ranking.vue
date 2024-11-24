@@ -1,35 +1,36 @@
 <template>
-    <div class="ranking-page">
-      <h1>Ranking de Jogadores</h1>
-      <p>Confira os melhores jogadores e suas pontuações no CTF!</p>
-  
-      <v-text-field
-        v-model="search"
-        label="Buscar jogador"
-        variant="outlined"
-        clearable
-        class="mb-4"
-      ></v-text-field>
-  
-      <v-data-table
-        :headers="headers"
-        :items="filteredPlayers"
-        :items-per-page="itemsPerPage"
-        :page.sync="page"
-        class="elevation-1"
-        dense
-      >
-        <template #item.avatar="{ item }">
-          <v-avatar>
-            <img :src="item.avatar" alt="Avatar" />
-          </v-avatar>
-        </template>
-      </v-data-table>
-  
-      <p v-if="loading" class="loading-text">Carregando...</p>
-      <p v-if="error" class="error-text">{{ error }}</p>
-    </div>
-  </template>
+  <div class="ranking-page">
+    <h1>{{ $t('ranking.title') }}</h1>
+    <p>{{ $t('ranking.description') }}</p>
+
+    <v-text-field
+      v-model="search"
+      :label="$t('ranking.searchPlayer')"
+      variant="outlined"
+      clearable
+      class="mb-4"
+    ></v-text-field>
+
+    <v-data-table
+      :headers="headers"
+      :items="filteredPlayers"
+      :items-per-page="itemsPerPage"
+      :page.sync="page"
+      class="elevation-1"
+      dense
+    >
+      <template #item.avatar="{ item }">
+        <v-avatar>
+          <img :src="item.avatar" alt="Avatar" />
+        </v-avatar>
+      </template>
+    </v-data-table>
+
+    <p v-if="loading" class="loading-text">{{ $t('ranking.loading') }}</p>
+    <p v-if="error" class="error-text">{{ $t('ranking.error') }}</p>
+  </div>
+</template>
+
   
   <script lang="ts" setup>
   import { ref, onMounted, onBeforeUnmount, computed } from 'vue';

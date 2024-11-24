@@ -1,28 +1,28 @@
 <template>
   <v-container class="mt-10" max-width="600px">
     <v-card>
-      <v-card-title>Registrar-se</v-card-title>
-      <v-card-subtitle>Crie sua conta</v-card-subtitle>
+      <v-card-title>{{ $t('register.title') }}</v-card-title>
+      <v-card-subtitle>{{ $t('register.subtitle') }}</v-card-subtitle>
 
       <v-card-text>
         <v-form @submit.prevent="handleRegister">
           <v-text-field
             v-model="username"
-            label="Nome de Usuário"
+            :label="$t('register.usernameLabel')"
             :rules="[usernameRule]"
             required
           ></v-text-field>
 
           <v-text-field
             v-model="email"
-            label="E-mail"
+            :label="$t('register.emailLabel')"
             type="email"
             required
           ></v-text-field>
 
           <v-text-field
             v-model="password"
-            label="Senha"
+            :label="$t('register.passwordLabel')"
             type="password"
             :rules="[passwordRule]"
             required
@@ -30,7 +30,7 @@
 
           <v-text-field
             v-model="confirmPassword"
-            label="Confirmar Senha"
+            :label="$t('register.confirmPasswordLabel')"
             type="password"
             :rules="[confirmPasswordRule]"
             required
@@ -41,17 +41,17 @@
               <img
                 v-if="selectedAvatar"
                 :src="selectedAvatar"
-                alt="Avatar Selecionado"
+                :alt="$t('register.avatarAlt')"
               />
             </v-avatar>
             <div>
               <v-btn color="primary" @click="openAvatarModal">
-                Escolher Avatar
+                {{ $t('register.avatarButton') }}
               </v-btn>
             </div>
           </div>
 
-          <v-btn type="submit" color="primary" block>Registrar</v-btn>
+          <v-btn type="submit" color="primary" block>{{ $t('register.registerButton') }}</v-btn>
         </v-form>
 
         <!-- Modal para escolha de avatar -->
@@ -65,11 +65,12 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn text @click="goToLogin">Já tem uma conta? Entrar</v-btn>
+        <v-btn text @click="goToLogin">{{ $t('register.loginLink') }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';

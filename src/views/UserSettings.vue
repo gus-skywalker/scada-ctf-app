@@ -1,34 +1,34 @@
 <template>
   <v-container class="mt-10" max-width="600px">
     <v-card>
-      <v-card-title>Configurações do Usuário</v-card-title>
-      <v-card-subtitle>Atualize suas informações</v-card-subtitle>
+      <v-card-title>{{ $t('userSettings.title') }}</v-card-title>
+      <v-card-subtitle>{{ $t('userSettings.subtitle') }}</v-card-subtitle>
 
       <v-card-text>
         <v-form @submit.prevent="handleUserUpdate">
           <!-- Campo para atualizar o nome de usuário -->
           <v-text-field
             v-model="newUsername"
-            label="Novo Nome de Usuário"
+            :label="$t('userSettings.newUsernameLabel')"
             :rules="[usernameRule]"
           ></v-text-field>
 
           <!-- Campos para atualizar a senha -->
           <v-text-field
             v-model="currentPassword"
-            label="Senha Atual"
+            :label="$t('userSettings.currentPasswordLabel')"
             type="password"
             :rules="[passwordRule]"
           ></v-text-field>
           <v-text-field
             v-model="newPassword"
-            label="Nova Senha"
+            :label="$t('userSettings.newPasswordLabel')"
             type="password"
             :rules="[passwordRule]"
           ></v-text-field>
           <v-text-field
             v-model="confirmPassword"
-            label="Confirmar Nova Senha"
+            :label="$t('userSettings.confirmPasswordLabel')"
             type="password"
             :rules="[confirmPasswordRule]"
           ></v-text-field>
@@ -36,18 +36,18 @@
           <!-- Seção para atualizar o avatar -->
           <div class="text-center">
             <v-avatar size="100" class="mb-4">
-              <img :src="selectedAvatar || authStore.avatar" alt="Avatar Atual" />
+              <img :src="selectedAvatar || authStore.avatar" :alt="$t('userSettings.currentAvatarAlt')" />
             </v-avatar>
             <div>
               <v-btn color="primary" @click="openAvatarModal">
-                Escolher Novo Avatar
+                {{ $t('userSettings.changeAvatarButton') }}
               </v-btn>
             </div>
           </div>
 
           <!-- Botão para salvar todas as alterações -->
           <v-btn type="submit" color="primary" class="mt-4" block>
-            Salvar Alterações
+            {{ $t('userSettings.saveButton') }}
           </v-btn>
         </v-form>
 
@@ -62,6 +62,7 @@
     </v-card>
   </v-container>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';
