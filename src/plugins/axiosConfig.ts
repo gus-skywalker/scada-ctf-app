@@ -1,4 +1,4 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:4001'; // Variavel de ambiente para url da API
+axios.defaults.baseURL = 'https://ctf.lesmonades.com'; //'http://localhost:4001'
 export default axios;
