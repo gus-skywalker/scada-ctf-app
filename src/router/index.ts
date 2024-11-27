@@ -31,9 +31,9 @@ router.beforeEach((to, _from, next) => {
   
   // Se a rota requer autenticação e o usuário não está autenticado
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    const token = localStorage.getItem('authToken');
+    const token = sessionStorage.getItem('authToken');
     
-    // Verificar o token no localStorage
+    // Verificar o token no sessionStorage
     if (token) {
       authStore.token = token;
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

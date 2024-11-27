@@ -158,6 +158,7 @@ const isUserLoggedIn = computed(() => authStore.isAuthenticated);
 
 // Remove 'Register' e 'Login' se o usuário estiver logado
 const filteredMenuItems = computed(() => {
+  
   if (isUserLoggedIn.value) {
     return menuItems.filter(
       (item) => item.name !== 'Register' && item.name !== 'Login'
