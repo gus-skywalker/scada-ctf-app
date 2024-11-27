@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string | null>(sessionStorage.getItem('authToken'));
-  const isAuthenticated = ref<boolean>(!!token.value);
   const username = ref<string | null>(sessionStorage.getItem('username'));
   const avatar = ref<string | null>(sessionStorage.getItem('avatar'));
+
+  const isAuthenticated = computed(() => !!token.value);
 
   interface RegisterPayload {
     username: string;
@@ -19,7 +20,6 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const response = await axios.post('/api/auth/login', { email, password });
       token.value = response.data.token;
-      isAuthenticated.value = true;
       username.value = response.data.username;
       avatar.value = response.data.avatar;
 
@@ -32,7 +32,6 @@ export const useAuthStore = defineStore('auth', () => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token.value}`;
     } catch (error) {
       console.error('Login failed:', error);
-      isAuthenticated.value = false;
 
       if (axios.isAxiosError(error) && error.response) {
         throw new Error(error.response.data.message || 'Falha ao fazer login. Verifique suas credenciais.');
@@ -64,7 +63,6 @@ export const useAuthStore = defineStore('auth', () => {
 
   function logout() {
     token.value = null;
-    isAuthenticated.value = false;
     username.value = null;
     avatar.value = null;
 
