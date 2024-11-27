@@ -10,24 +10,16 @@
     <h2>{{ $t('instructions') }}</h2>
     <ol>
       <li>
-        <strong>{{ $t('criticalAlerts') }}</strong>
-        <p>{{ $t('requiredData') }}</p>
+        <strong>{{ $t('outletValveChange') }}</strong>
       </li>
       <li>
-        <strong>{{ $t('vulnerabilityWindow') }}</strong>
-        <p>{{ $t('refineryCodeAccess') }}</p>
+        <strong>{{ $t('feedPumpChange') }}</strong>
       </li>
       <li>
-        <strong>{{ $t('refineryCodeAccess') }}</strong>
-        <p>{{ $t('requiredData') }}</p>
+        <strong>{{ $t('oilStorageFull') }}</strong>
       </li>
       <li>
-        <strong>{{ $t('requiredData') }}</strong>
-        <p>{{ $t('behavior') }}</p>
-        <ul>
-          <li>{{ $t('behavior') }}</li>
-          <li>{{ $t('unexpectedMessage') }}</li>
-        </ul>
+        <strong>{{ $t('separatorVesselRegisters') }}</strong>
       </li>
     </ol>
 

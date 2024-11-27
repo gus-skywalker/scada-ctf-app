@@ -7,12 +7,18 @@
   "writeCommands": "Write Commands",
   "abnormalTraffic": "Discovery Abnormal Traffic",
   "pythonScripts": "Python Attack Scripts",
+
   "criticalAlerts": "Where do the critical refinery alerts go in case of operational issues (port/protocol)?",
   "vulnerabilityWindow": "What is the time window vulnerable to an attack?",
   "refineryCodeAccess": "Where is the access code to the refinery scheme?",
   "requiredData": "What is needed to obtain the file with the refinery scheme code?",
   "behavior": "a. If yes, what behavior was observed?",
   "unexpectedMessage": "b. If you send an unexpected message, what happens?",
+
+  "outletValveChange": "Which register is altered when oil flows through the outlet valve?",
+  "feedPumpChange": "Which register is altered when the feed pump is filling the oil storage unit?",
+  "oilStorageFull": "Which register is altered when the oil storage unit is full?",
+  "separatorVesselRegisters": "Which registers are used by the waste separation system?",
   "navbar": {
     "logoAlt": "Logo",
     "portuguese": "Portuguese",

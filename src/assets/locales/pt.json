@@ -7,12 +7,18 @@
   "writeCommands": "Comandos de Escrita",
   "abnormalTraffic": "Descoberta de Tráfego Anormal",
   "pythonScripts": "Scripts de Ataque em Python",
+
   "criticalAlerts": "Para onde vão os alertas críticos da refinaria em casos de problemas na operação (porta/protocolo)?",
   "vulnerabilityWindow": "Qual a janela de tempo que está passível a um ataque?",
   "refineryCodeAccess": "Onde está o código de acesso do esquema da refinaria?",
   "requiredData": "O que é necessário para obter o arquivo com o código do esquema da refinaria?",
   "behavior": "a. Se sim, qual foi o comportamento obtido?",
   "unexpectedMessage": "b. Se enviar uma mensagem inesperada, o que acontece?",
+
+  "outletValveChange": "Qual registro tem seu valor alterado quando o óleo flui pela válvula de saída?",
+  "feedPumpChange": "Qual registro tem seu valor alterado quando a bomba de alimentação está enchendo a unidade de armazenamento de óleo?",
+  "oilStorageFull": "Qual registro tem seu valor alterado quando a unidade de armazenamento de óleo está cheia?",
+  "separatorVesselRegisters": "Quais registros são utilizados pelo sistema de separação de resíduos?",
   "navbar": {
     "logoAlt": "Logo",
     "portuguese": "Português",
