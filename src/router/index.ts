@@ -36,7 +36,6 @@ router.beforeEach((to, _from, next) => {
     // Verificar o token no localStorage
     if (token) {
       authStore.token = token;
-      authStore.isAuthenticated = true;
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       next(); // Continuar com a navegação
     } else {
